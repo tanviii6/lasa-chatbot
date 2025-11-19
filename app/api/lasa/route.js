@@ -1,5 +1,7 @@
 import { Groq } from "groq-sdk";
 
+const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY
 });
@@ -47,14 +49,15 @@ export async function POST(req) {
     let apiType = null;
 
     if (hall && meal) {
-      const url = `http://localhost:3000/api/menu/structured?hall=${hall}&meal=${meal}`;
+        
+      const url = `${base}/api/menu/structured?hall=${hall}&meal=${meal}`;
       const res = await fetch(url);
       apiData = await res.json();
       apiType = "structured";
     } 
     
     else if (itemQuery) {
-      const url = `http://localhost:3000/api/menu/search?query=${itemQuery}`;
+      const url = `${base}/api/menu/search?query=${itemQuery}`;
       const res = await fetch(url);
       apiData = await res.json();
       apiType = "search";
